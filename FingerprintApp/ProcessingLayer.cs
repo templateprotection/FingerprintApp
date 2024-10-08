@@ -97,9 +97,9 @@ namespace FingerprintApp
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50)); 
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50)); 
 
-            Label lblKernelSize = new Label { Text = "Kernel Size", TextAlign = System.Drawing.ContentAlignment.MiddleLeft, Dock = DockStyle.Top, AutoSize = true };
+            Label lblKernelSize = new Label { Text = "Kernel Size", TextAlign = ContentAlignment.MiddleLeft, Dock = DockStyle.Top, AutoSize = true };
             NumericUpDown numKernelSize = new NumericUpDown { Minimum = 1, Maximum = 100, Increment = 2, Value = KernelSize, Dock = DockStyle.Top, AutoSize = true };
-            Label lblSigma = new Label { Text = "Sigma", TextAlign = System.Drawing.ContentAlignment.MiddleLeft, Dock = DockStyle.Top, AutoSize = true };
+            Label lblSigma = new Label { Text = "Sigma", TextAlign = ContentAlignment.MiddleLeft, Dock = DockStyle.Top, AutoSize = true };
             NumericUpDown numSigma = new NumericUpDown { Minimum = 0, Maximum = 100, DecimalPlaces = 1, Value = (decimal)Sigma, Dock = DockStyle.Top, AutoSize = true };
 
             numKernelSize.ValueChanged += (s, e) => { KernelSize = (int)numKernelSize.Value; };
@@ -169,7 +169,7 @@ namespace FingerprintApp
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
             tableLayoutPanel.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 50));
 
-            Label lblThreshold = new Label { Text = "Threshold (0-256)", TextAlign = System.Drawing.ContentAlignment.MiddleLeft, Dock = DockStyle.Top, AutoSize = true };
+            Label lblThreshold = new Label { Text = "Threshold (0-256)", TextAlign = ContentAlignment.MiddleLeft, Dock = DockStyle.Top, AutoSize = true };
             NumericUpDown numThreshold = new NumericUpDown { Minimum = 0, Maximum = 256, Increment = 1, Value = Threshold,Dock = DockStyle.Top, AutoSize = true };
             numThreshold.ValueChanged += (s, e) => { Threshold = (int)numThreshold.Value; };
 
@@ -180,7 +180,16 @@ namespace FingerprintApp
             return tableLayoutPanel;
         }
 
-        /*
+        public override void ProcessMatrix(Mat mat, out Mat result)
+        {
+            result = new Mat(mat.Size(), MatType.CV_8U);
+            Cv2.Threshold(mat, result, Threshold, 256, ThresholdTypes.Binary);
+        }
+
+    }
+
+    // TODO: Convert gabor function into a layer with params Sigma, NumOrientations, Wavelength, Gamma, and Psi
+    /* 
         private void Gabor(Mat mat, out Mat smoothRidges)
         {
             smoothRidges = new Mat(mat.Size(), MatType.CV_32F);
@@ -200,13 +209,5 @@ namespace FingerprintApp
             smoothRidges.ConvertTo(smoothRidges, MatType.CV_8U);
         }
         */
-
-        public override void ProcessMatrix(Mat mat, out Mat result)
-        {
-            result = new Mat(mat.Size(), MatType.CV_8U);
-            Cv2.Threshold(mat, result, Threshold, 256, ThresholdTypes.Binary);
-        }
-
-    }
 
 }
