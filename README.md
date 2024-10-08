@@ -30,12 +30,22 @@ This project is a fingerprint processing application built in C# using WindowsFo
 - **Remove Layer**: The **Del** button removes the currently selected layer.
 
 ## Installation:
-
 1. Clone or download the repository.
 2. Install the dependencies:
    - OpenCvSharp
    - OpenCvSharp.Extensions
    - WindowsForms
+
+3. Build the project
+   ```ps
+   cd FingerprintApp
+   dotnet build
+   ```
+   
+4. Run the project
+   ```ps
+   dotnet run --project FingerprintApp.csproj
+   ```
 
 ## Future TODO:
 - Add more processing layers: Gabor, Dilate, Erode.
